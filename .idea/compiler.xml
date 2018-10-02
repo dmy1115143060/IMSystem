@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="IMSystemImpl" target="8" />
+      <module name="IMSystemImpl" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

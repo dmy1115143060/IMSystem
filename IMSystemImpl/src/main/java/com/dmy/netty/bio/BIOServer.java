@@ -7,6 +7,7 @@ import java.net.Socket;
 
 /**
  * Created by DMY on 2018/9/30 17:41
+ * 传统BIO客户端服务器模型
  */
 public class BIOServer {
     public static void main(String[] args) throws Exception {
