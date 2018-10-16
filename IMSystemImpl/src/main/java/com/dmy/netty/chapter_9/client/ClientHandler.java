@@ -1,9 +1,9 @@
-package com.dmy.netty.chapter_8.client;
+package com.dmy.netty.chapter_9.client;
 
-import com.dmy.netty.chapter_8.protocol.Packet;
-import com.dmy.netty.chapter_8.protocol.PacketCodeC;
-import com.dmy.netty.chapter_8.protocol.request.LoginRequestPacket;
-import com.dmy.netty.chapter_8.protocol.response.LoginResponsePacket;
+import com.dmy.netty.chapter_9.protocol.Packet;
+import com.dmy.netty.chapter_9.protocol.PacketCodeC;
+import com.dmy.netty.chapter_9.protocol.request.LoginRequestPacket;
+import com.dmy.netty.chapter_9.protocol.response.LoginResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
