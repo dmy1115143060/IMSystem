@@ -8,8 +8,9 @@ public interface Serializer {
 
     /**
      * 序列化算法
+     * @return
      */
-    byte getSerializerAlgorithm();
+    byte getSerializerAlogrithm();
 
     /**
      * java 对象转换成二进制

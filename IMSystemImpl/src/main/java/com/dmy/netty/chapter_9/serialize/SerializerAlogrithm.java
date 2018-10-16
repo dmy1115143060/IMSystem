@@ -1,6 +1,6 @@
 package com.dmy.netty.chapter_9.serialize;
 
-public interface SerializerAlgorithm {
+public interface SerializerAlogrithm {
     /**
      * json 序列化
      */

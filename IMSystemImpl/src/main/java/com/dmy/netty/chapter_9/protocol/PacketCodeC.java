@@ -2,12 +2,13 @@ package com.dmy.netty.chapter_9.protocol;
 
 import com.dmy.netty.chapter_9.protocol.command.Command;
 import com.dmy.netty.chapter_9.protocol.request.LoginRequestPacket;
+import com.dmy.netty.chapter_9.protocol.request.MessageRequestPacket;
 import com.dmy.netty.chapter_9.protocol.response.LoginResponsePacket;
+import com.dmy.netty.chapter_9.protocol.response.MessageResponsePacket;
 import com.dmy.netty.chapter_9.serialize.Serializer;
 import com.dmy.netty.chapter_9.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,11 +26,14 @@ public class PacketCodeC {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(Command.LOGIN_REQUEST, LoginRequestPacket.class);
         packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponsePacket.class);
+        packetTypeMap.put(Command.MESSAGE_REQUEST, MessageRequestPacket.class);
+        packetTypeMap.put(Command.MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
-        serializerMap.put(serializer.getSerializerAlgorithm(), serializer);
+        serializerMap.put(serializer.getSerializerAlogrithm(), serializer);
     }
+
 
     public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
         // 1. 创建 ByteBuf 对象
@@ -40,13 +44,14 @@ public class PacketCodeC {
         // 3. 实际编码过程
         byteBuf.writeInt(MAGIC_NUMBER);
         byteBuf.writeByte(packet.getVersion());
-        byteBuf.writeByte(Serializer.DEFAULT.getSerializerAlgorithm());
+        byteBuf.writeByte(Serializer.DEFAULT.getSerializerAlogrithm());
         byteBuf.writeByte(packet.getCommand());
         byteBuf.writeInt(bytes.length);
         byteBuf.writeBytes(bytes);
 
         return byteBuf;
     }
+
 
     public Packet decode(ByteBuf byteBuf) {
         // 跳过 magic number

@@ -3,7 +3,9 @@ package com.dmy.netty.chapter_9.server;
 import com.dmy.netty.chapter_9.protocol.Packet;
 import com.dmy.netty.chapter_9.protocol.PacketCodeC;
 import com.dmy.netty.chapter_9.protocol.request.LoginRequestPacket;
+import com.dmy.netty.chapter_9.protocol.request.MessageRequestPacket;
 import com.dmy.netty.chapter_9.protocol.response.LoginResponsePacket;
+import com.dmy.netty.chapter_9.protocol.response.MessageResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -14,17 +16,15 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        System.out.println(new Date() + ": 客户端开始登录……");
         ByteBuf requestByteBuf = (ByteBuf) msg;
 
-        // 获取客户端的请求数据包
         Packet packet = PacketCodeC.INSTANCE.decode(requestByteBuf);
 
-        // 处理客户端的登录请求
         if (packet instanceof LoginRequestPacket) {
-            // 获取登录请求数据包
+            System.out.println(new Date() + ": 收到客户端登录请求……");
+            // 登录流程
             LoginRequestPacket loginRequestPacket = (LoginRequestPacket) packet;
-            // 构建登录请求响应数据包
+
             LoginResponsePacket loginResponsePacket = new LoginResponsePacket();
             loginResponsePacket.setVersion(packet.getVersion());
             if (valid(loginRequestPacket)) {
@@ -38,12 +38,18 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             // 登录响应
             ByteBuf responseByteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(), loginResponsePacket);
             ctx.channel().writeAndFlush(responseByteBuf);
+        } else if (packet instanceof MessageRequestPacket) {
+            // 客户端发来消息
+            MessageRequestPacket messageRequestPacket = ((MessageRequestPacket) packet);
+
+            MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
+            System.out.println(new Date() + ": 收到客户端消息: " + messageRequestPacket.getMessage());
+            messageResponsePacket.setMessage("服务端回复【" + messageRequestPacket.getMessage() + "】");
+            ByteBuf responseByteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(), messageResponsePacket);
+            ctx.channel().writeAndFlush(responseByteBuf);
         }
     }
 
-    /**
-     * 账号密码校验逻辑
-     */
     private boolean valid(LoginRequestPacket loginRequestPacket) {
         return true;
     }

@@ -9,9 +9,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.util.Date;
 
-/**
- * Created by DMY on 2018/10/4 12:42
- */
 public class NettyServer {
 
     private static final int PORT = 8000;
@@ -28,11 +25,11 @@ public class NettyServer {
                 .childOption(ChannelOption.SO_KEEPALIVE, true)
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
+                    @Override
                     protected void initChannel(NioSocketChannel ch) {
                         ch.pipeline().addLast(new ServerHandler());
                     }
                 });
-
         bind(serverBootstrap, PORT);
     }
 

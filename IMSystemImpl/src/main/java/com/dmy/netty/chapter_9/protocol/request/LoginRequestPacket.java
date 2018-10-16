@@ -4,6 +4,7 @@ import com.dmy.netty.chapter_9.protocol.Packet;
 import com.dmy.netty.chapter_9.protocol.command.Command;
 import lombok.Data;
 
+
 @Data
 public class LoginRequestPacket extends Packet {
     private String userId;
