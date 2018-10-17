@@ -7,9 +7,12 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.util.List;
 
+/**
+ * 实现二进制转换成对象
+ */
 public class PacketDecoder extends ByteToMessageDecoder {
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List out) {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
         out.add(PacketCodeC.INSTANCE.decode(in));
     }
 }

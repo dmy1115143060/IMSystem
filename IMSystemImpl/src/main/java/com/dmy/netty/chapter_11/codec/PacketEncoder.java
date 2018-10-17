@@ -6,6 +6,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
+/**
+ * 实现Packet类型到二进制的转换
+ */
 public class PacketEncoder extends MessageToByteEncoder<Packet> {
 
     @Override

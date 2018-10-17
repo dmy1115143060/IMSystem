@@ -78,12 +78,10 @@ public class PacketCodeC {
     }
 
     private Serializer getSerializer(byte serializeAlgorithm) {
-
         return serializerMap.get(serializeAlgorithm);
     }
 
     private Class<? extends Packet> getRequestType(byte command) {
-
         return packetTypeMap.get(command);
     }
 }

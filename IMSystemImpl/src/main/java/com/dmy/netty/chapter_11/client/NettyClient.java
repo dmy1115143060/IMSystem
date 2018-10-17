@@ -41,9 +41,13 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel ch) {
+                        // pipeline，先对数据包进行解码，解码后将对象向下一个handler传递
                         ch.pipeline().addLast(new PacketDecoder());
+                        // 处理服务器发送的登录响应数据包
                         ch.pipeline().addLast(new LoginResponseHandler());
+                        // 处理服务器发送消息回复数据包
                         ch.pipeline().addLast(new MessageResponseHandler());
+                        // 数据编码
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
@@ -78,7 +82,6 @@ public class NettyClient {
                     System.out.println("输入消息发送至服务端: ");
                     Scanner sc = new Scanner(System.in);
                     String line = sc.nextLine();
-
                     channel.writeAndFlush(new MessageRequestPacket(line));
                 }
             }
